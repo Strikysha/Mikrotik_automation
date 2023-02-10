@@ -1,5 +1,5 @@
 ## Generic IP address list input
-## Script written by Yury Vaskaboinikau, 2008
+## Script written by Yury V, 2008
 # lpref = prefix; llist = suffix (and the name of file to fetch)
 :local lpref "bynets_v4";
 :local lname "bynets";
