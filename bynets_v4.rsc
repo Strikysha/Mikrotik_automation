@@ -6,7 +6,7 @@
 :local llist "$lpref";
 :local lfile "$lname.txt";
 
-/tool fetch address=datacenter.by host=datacenter.by mode=http src-path="ip/$lfile"
+/tool fetch address=datacenter.by host=datacenter.by mode=https src-path="ip/$lfile"
 :delay 10 ;
 :if ( [/file get [/file find name="$lfile"] size] > 0 ) do={
 # Remove existing addresses from the current Address list
