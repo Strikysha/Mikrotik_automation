@@ -30,9 +30,4 @@ jobs:
         run: python fetch_ips.py
 
       - name: Commit changes
-        run: |
-          git config --global user.name 'strikysha'
-          git config --global user.email 'your-github-email'
-          git add .
-          git commit -m "Update IP lists" || echo "No changes to commit"
-          git push
+        uses: stefanzweifel/git-auto-commit-action@v5
