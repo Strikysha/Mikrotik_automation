@@ -2,11 +2,11 @@
 ## Script written by Yury V, 2008
 # lpref = prefix; llist = suffix (and the name of file to fetch)
 :local lpref "bynets_v4";
-:local lname "bynets";
+:local lname "IPv4_list";
 :local llist "$lpref";
 :local lfile "$lname.txt";
 
-/tool fetch address=datacenter.by host=datacenter.by mode=https src-path="ip/$lfile"
+/tool fetch address=raw.githubusercontent.com host=raw.githubusercontent.com mode=https src-path="Strikysha/Mikrotik_automation/refs/heads/main/$lfile"
 :delay 10 ;
 :if ( [/file get [/file find name="$lfile"] size] > 0 ) do={
 # Remove existing addresses from the current Address list
