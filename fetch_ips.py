@@ -3,28 +3,27 @@ from bs4 import BeautifulSoup
 
 def fetch_ips(url):
     response = requests.get(url)
-    soup = BeautifulSoup(response.content, 'html.parser')
-
-    # Предполагаем, что таблица находится в теге <pre>
-    pre_tag = soup.find('pre')
+    response.encoding = response.apparent_encoding  # Устраняем проблемы с кодировкой
+    soup = BeautifulSoup(response.text, 'html.parser')
     
-    # Обрабатываем текст внутри <pre> для извлечения IP-адресов
+    # Находим все элементы <pre>
+    pre_tags = soup.find_all('pre')
+
+    # На случай, если порядок столбцов изменится, более надёжно присвоить списки после проверки содержимого.
     ipv4_list = []
     ipv6_list = []
-    for line in pre_tag.text.split("\n"):
-        # Отделим IPv4 и IPv6 на основании символа ':'
-        if ':' in line:
-            # Это IPv6 адрес
-            ipv6_list.append(line.strip())
-        elif line.strip():
-            # Это IPv4 адрес
-            ipv4_list.append(line.strip())
+
+    for pre in pre_tags:
+        if '.' in pre.text:
+            ipv4_list += pre.text.strip().split("\n")
+        elif ':' in pre.text:
+            ipv6_list += pre.text.strip().split("\n")
 
     # Сохраняем списки в файлы
-    with open('IPv4_list.txt', 'w') as f:
-        f.write("\n".join(ipv4_list))
-    with open('IPv6_list.txt', 'w') as f:
-        f.write("\n".join(ipv6_list))
+    with open('IPv4_list.txt', 'w') as ipv4_file:
+        ipv4_file.write("\n".join(ipv4_list))
+    with open('IPv6_list.txt', 'w') as ipv6_file:
+        ipv6_file.write("\n".join(ipv6_list))
 
 if __name__ == '__main__':
     url = 'https://beltelecom.by/business/hosting/belnetworks'
