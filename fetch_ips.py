@@ -15,9 +15,9 @@ def fetch_ips(url):
 
     for pre in pre_tags:
         if '.' in pre.text:
-            ipv4_list += pre.text.strip().split("\n")
+            ipv4_list += [line.strip() for line in pre.text.strip().split("\n") if line.strip()]
         elif ':' in pre.text:
-            ipv6_list += pre.text.strip().split("\n")
+            ipv6_list += [line.strip() for line in pre.text.strip().split("\n") if line.strip()]
 
     # Сохраняем списки в файлы
     with open('IPv4_list.txt', 'w') as ipv4_file:
